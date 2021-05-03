@@ -139,4 +139,15 @@ Roolback: Deploy previous version of application
 > oc roolback <dc/hellow-world>
 ```
 
+## Services & Routes
+
+Create service
+```
+oc expose --port <8080> <pod/hellow-world-pod>
+```
+
+Create routes
+```
+oc expose <svc/hello-world>
+```
 
