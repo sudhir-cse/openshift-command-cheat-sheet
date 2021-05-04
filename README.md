@@ -81,6 +81,12 @@ oc new-app <image-tag> --name <lable-name>
 e.g oc new-app quay.io/praticalopenshift/hello-world --name demo-app
 ```
 
+Create deployment config using image stream. Look at the image-strem section for creating image-stream resource.
+```
+oc new-app <is-name>
+eg oc new-app myproject/hello-world
+```
+
 All the resources currently in the project
 ```
 oc status
@@ -192,4 +198,74 @@ oc create configmap <resource_name> --from-file <dir_name>
 Verify the content of configmap
 ```
 oc get -o yaml <cm/message-map>
+```
+
+## ImageStream
+
+Get the image stream
+```
+oc get is
+```
+
+Get image stream tag
+```
+oc get imagestreamtag
+oc get istag
+```
+
+Create image stream
+```
+oc import-image --conform <image_name>
+e.g. oc import-image --conform quay.io/practicalopenshift/hello-world
+```
+
+Delete image stream
+```
+oc delete <is/hello-world>
+```
+
+Create image stream tag
+```
+oc tag <original> <destination>
+e.g. oc tag quay.io/image-name:tag image-name:tag
+```
+
+Push the image to the private repository
+```
+Get the credentials: credentials.env
+> source credentials.env
+> echo $REGISTRY_USERNAME (for verification)
+- Docker image name should have following format
+  - Hos/Repository/Image_Name:tag
+  - quay.io/practialopenshift/private-repo:tag
+> docker login <quay.io>
+> docker push <image_name>
+
+```
+
+Create docker registory secret to pull the image from private image, otherwise creating new app (deployment config) will fail
+```
+oc create secret docker-registory \
+  <name e.g. demo-image-pull-secret> \
+  --docker-server=$REGISTRY_HOST \
+  --docker-username=$REGISTRY_USERNAME \
+  --docker-password=$REGISTRY_PASSWORD \
+  --docker-email=$REGISTRY_EMAIL
+```
+
+Link the service account with registory-secret to be able to pull the image. 
+```
+oc secret link <service_account> <secret_name> --for=pull
+e.g. oc secret link default demo-image-pull-secret -for=pull
+- The command above will use the service account named 'default' for the porject
+```
+
+To check if the secret is linked with serviceaccount
+```
+oc describe serviceaccount/default
+```
+
+V
+```
+oc 
 ```
