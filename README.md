@@ -151,3 +151,45 @@ Create routes
 oc expose <svc/hello-world>
 ```
 
+## ConfigMap
+
+Create using command line
+```
+oc create configmap <resource-name> \
+--from-literal <key>="<value>"
+e.g. oc create configmap message-map \
+--from-literal MESSAGE="Hello From ConfigMap"
+```
+
+Get configmap
+```
+oc get configmap
+```
+
+Verify the content of configmap
+```
+oc get -o yaml <cm/message-map>
+```
+
+Consume configmap from inside pod (using env variable)
+```
+oc set env <dc/hello-world> --from <cm/message-map>
+```
+
+Create configmap from file
+```
+- the file_name which in this case is 'MESSAGE.txt' iskey and file content is value.
+> oc create configmap <name> --from-file=MESSAGE.txt
+- Key other than file_name
+> oc create configmap <name> --from-file=<KEY>=<FILE_NAME>
+```
+
+Create configmap from directory 
+```
+oc create configmap <resource_name> --from-file <dir_name>
+```
+
+Verify the content of configmap
+```
+oc get -o yaml <cm/message-map>
+```
