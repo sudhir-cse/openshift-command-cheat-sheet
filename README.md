@@ -149,7 +149,7 @@ Roolback: Deploy previous version of application
 
 Create service
 ```
-oc expose --port <8080> <pod/hellow-world-pod>
+oc expose --port <8080> <pod/hellow-world-pod> --name <service_name>
 ```
 
 Create routes
