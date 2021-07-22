@@ -155,7 +155,7 @@ Another way to create service
 ```
 oc create service clusterip <service-name> --tcp <srource_port:target_port>
 
-Then change the service-yml selector section to point to point to specific deployment config
+Then change the service-yml selector section to point to specific deployment config
 
 ---
   selector:
