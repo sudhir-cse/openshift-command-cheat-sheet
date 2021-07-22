@@ -151,6 +151,16 @@ Create service
 ```
 oc expose --port <8080> <pod/hellow-world-pod> --name <service_name>
 ```
+Another way to create service
+```
+oc create service clusterip <service-name> --tcp <srource_port:target_port>
+
+Then change the service-yml selector section to point to point to specific deployment config
+
+selector:
+- app: 
+```
+
 
 Create routes
 ```
